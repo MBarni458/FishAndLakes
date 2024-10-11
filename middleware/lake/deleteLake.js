@@ -1,6 +1,6 @@
 /**
  * Removes a lake from the database
- * Redirects to /lake after delete
+ * Redirects to / after delete
  */
 module.exports = function (objectrepository) {
 

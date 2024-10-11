@@ -14,7 +14,7 @@ module.exports = function (app) {
     /**
      * List all lakes
      */
-    app.use('/lake',
+    app.use('/',
         getLakeListMW(objectRepository),
         renderMW(objectRepository, 'lakes')
     );
