@@ -11,20 +11,25 @@ module.exports = function (app) {
         lakeModel: {}
     };
 
+    app.use('/',
+        getLakeListMW(objectRepository),
+        renderMW(objectRepository, 'index')
+    );
+
     /**
      * List all lakes
      */
-    app.use('/',
+    app.use('/lake',
         getLakeListMW(objectRepository),
-        renderMW(objectRepository, 'lakes')
-    );
+        renderMW(objectRepository, 'index')
+    )
 
     /**
      * Get one lake
      */
     app.use('/lake/:lakeid',
         getLakeMW(objectRepository),
-        renderMW(objectRepository, 'lake')
+        renderMW(objectRepository, 'lake_edit')
     );
 
 
@@ -33,7 +38,7 @@ module.exports = function (app) {
      */
     app.use('/lake/new',
         editLakeMW(objectRepository),
-        renderMW(objectRepository, 'editlake')
+        renderMW(objectRepository, 'lake_edit')
     );
 
     /**
