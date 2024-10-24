@@ -1,13 +1,18 @@
 <%- include('head') -%>
 <%- include('header') -%>
 <%- include('navbar') -%>
+
+<%
+   const edit = typeof lake !== 'undefined'
+ %>
+
 <div class="container w-100 w-md-75 mx-auto bg-white">
     <div class="row p-5 m-5">
         <!--Lake edit-->
         <div class="col-12 col-md-6 border-end-black px-md-5">
             <div class="row">
                 <div class="col-12">
-                    <h1 class="text-center">Tó szerkesztése</h1>
+                    <h1 class="text-center">Tó <% if(edit) { %> szerkesztése <%}else{%> létrehozása<%}%></h1>
                 </div>
                 <form>
                     <div class="row">
@@ -15,41 +20,41 @@
                         <div class="col-12 col-md-6">
                                 <div class="mb-3">
                                     <label for="lakeName" class="form-label">Név</label>
-                                    <input type="text" class="form-control border-primary" id="lakeName">
+                                    <input type="text" class="form-control border-primary" id="lakeName" value="<%= edit ? lake.name : "" %>">
                                 </div>
                         </div>
                             <!--Natural-->
                             <div class="col-12 col-md-6 ">
                                 <div class="form-check form-switch">
-
                                     <label class="form-check-label" for="natural">Természetes</label>
                                     <br>
-                                    <input class="form-check-input mx-auto w-25" type="checkbox" id="natural">
+                                    <input class="form-check-input mx-auto w-25" type="checkbox" id="natural" <%= edit && lake.natural ? "checked" : "" %>>
                                 </div>
                             </div>
-                        <!--Name-->
+                        <!--Water content-->
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label for="waterContent" class="form-label">Víztartalom (liter)</label>
-                                <input type="number" class="form-control border-primary" id="waterContent">
+                                <input type="number" class="form-control border-primary" id="waterContent" value="<%= edit ? lake.waterContent : 0 %>">
                             </div>
                         </div>
                         <!--Depth-->
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label for="lakeDepth" class="form-label">Legmélyebb pont (méter)</label>
-                                <input type="number" class="form-control border-primary" id="lakeDepth">
+                                <input type="number" class="form-control border-primary" id="lakeDepth" value="<%= edit ? lake.depth : 0 %>">
                             </div>
                         </div>
                         <!--Description-->
                         <div class="col-12">
                             <div class="mb-3">
                                 <label for="description">Leírás</label>
-                                <textarea class="form-control border-primary" id="description" placeholder="Required example textarea" required></textarea>
+                                <textarea class="form-control border-primary" id="description" placeholder="Required example textarea" required><%= edit ? lake.description : "" %>
+                                </textarea>
                             </div>
                         </div>
                         <div class="col-6">
-                            <a href="/index.html" class="btn btn-outline-primary">Vissza</a>
+                            <a href="/lake" class="btn btn-outline-primary">Vissza</a>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
                             <button type="button" class="btn btn-outline-primary">Mentés</button>
@@ -64,25 +69,32 @@
                 <!--Fish grid-->
                 <div class="h-75 overflow-y-scroll p-2">
                     <!--Fish card-->
-                    <div class="mx-auto d-flex flex-row justify-content-around rounded w-100 border border-primary p-1">
+                    <%if (edit) { %>
+                        <%lake.fish.forEach((fish)=> {%>
+                    <div class="mx-auto d-flex flex-row justify-content-around rounded w-100 border border-primary p-1 my-1">
                         <div>
-                            <h3 class="text-sm">Némó</h3>
+                            <h3 class="text-sm"><%= fish.name%></h3>
                         </div>
                         <div>
-                            <a href="fish_edit.ejs" class="btn btn-outline-secondary">Megtekintés</a>
+                            <a href="/fish/get/<%=fish._id%>" class="btn btn-outline-secondary">Megtekintés</a>
                         </div>
                         <div>
                             <button type="button" class="btn btn-outline-danger">Törlés</button>
                         </div>
                     </div>
+                    <%});}%>
                 </div>
             <div class="row">
                 <!--Fish dropdown-->
                 <div class="dropdown col-6">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="selectFish" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Válassz halat
-                    </button>
+                    <select class="border rounded border-primary mx-auto py-1 w-100 text-primary">
+                        <option selected disabled class=>Válassz halat</option>>
+                        <% fishList.forEach((fish)=> {  %>
+                        <option class="text-primary" id="<%=fish._id%>"><%=fish.name%></option>
+                        <% });%>
+                    </select>
                 </div>
+
                 <!--Add button-->
                 <div class="col-6 d-flex justify-content-end">
                     <button type="button" class="btn btn-outline-primary">Hozzáad</button>

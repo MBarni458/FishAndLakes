@@ -1,13 +1,16 @@
 <%- include('head') -%>
 <%- include('header') -%>
 <%- include('navbar') -%>
+
+<% const edit = typeof fish !== 'undefined'%>
+
 <div class="container w-100 w-md-75 mx-auto bg-white">
     <div class="row p-5 m-5">
         <!--Lake edit-->
         <div class="col-12 border-end-black px-md-5">
             <div class="row">
                 <div class="col-12">
-                    <h1 class="text-center">Hal szerkesztése</h1>
+                    <h1 class="text-center">Hal <% if(edit) { %> szerkesztése <%}else{%> létrehozása<%}%></h1>
                 </div>
                 <form>
                     <div class="row">
@@ -15,19 +18,19 @@
                         <div class="col-12 col-md-6">
                                 <div class="mb-3">
                                     <label for="lakeName" class="form-label">Név</label>
-                                    <input type="text" class="form-control border-primary" id="lakeName">
+                                    <input type="text" class="form-control border-primary" id="lakeName" value="<%= edit ? fish.name : "" %>">
                                 </div>
                         </div>
                             <!--Birthdate-->
                             <div class="col-12 col-md-6">
                                     <label class="form-check-label" for="birthdate">Születési dátum</label>
-                                <input class="form-check-input w-100 h-50 border border-primary rounded " type="date" id="birthdate">
+                                <input class="form-check-input w-100 h-50 border border-primary rounded " type="date" id="birthdate" value="<%= edit ? fish.birthdate : "" %>">
                             </div>
                         <!--Color-->
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label for="color" class="form-label">Szín</label>
-                                <input type="text" class="form-control border-primary" id="color">
+                                <input type="text" class="form-control border-primary" id="color" value="<%= edit ? fish.color : "" %>">
                             </div>
                         </div>
                         <!--Weight-->
@@ -40,14 +43,15 @@
                         <!--Predator-->
                         <div class="col-12 col-md-6">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="predator">
+                                <input class="form-check-input" type="checkbox" id="predator"
+                                        <%= edit && fish.predator ? "checked" : "" %> >
                                 <label class="form-check-label" for="predator">Ragadozó</label>
                             </div>
                         </div>
                         <!--Action buttons-->
                         <div class="col-12 row my-2">
                             <div class="col-6">
-                                <a href="/fish.html" class="btn btn-outline-primary">Vissza</a>
+                                <a href="/fish" class="btn btn-outline-primary">Vissza</a>
                             </div>
                             <div class="col-6 d-flex justify-content-end">
                                 <button type="button" class="btn btn-outline-primary">Mentés</button>
