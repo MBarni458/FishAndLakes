@@ -12,19 +12,11 @@ module.exports = function (app) {
     };
 
     /**
-     * List all fish
-     */
-    app.use('/fish',
-        getFishListMW(objectRepository),
-        renderMW(objectRepository, 'fish')
-    );
-
-    /**
      * Get one fish
      */
-    app.use('/fish/:fishid',
+    app.use('/fish/get/:fishid',
         getFishMW(objectRepository),
-        renderMW(objectRepository, 'fish')
+        renderMW(objectRepository, 'fish_edit')
     );
 
 
@@ -33,7 +25,7 @@ module.exports = function (app) {
      */
     app.use('/fish/new',
         editFishMW(objectRepository),
-        renderMW(objectRepository, 'editfish')
+        renderMW(objectRepository, 'fish_edit')
     );
 
     /**
@@ -42,7 +34,7 @@ module.exports = function (app) {
     app.use('/fish/:fishid/edit',
         getFishMW(objectRepository),
         editFishMW(objectRepository),
-        renderMW(objectRepository, 'editfish')
+        renderMW(objectRepository, 'fish_edit')
     );
 
     /**
@@ -54,6 +46,14 @@ module.exports = function (app) {
         function (req, res, next) {
             return res.redirect('/fish');
         }
+    );
+
+    /**
+     * List all fish
+     */
+    app.use('/fish',
+        getFishListMW(objectRepository),
+        renderMW(objectRepository, 'fish')
     );
 
 };
