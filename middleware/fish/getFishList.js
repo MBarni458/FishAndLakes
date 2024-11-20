@@ -11,7 +11,7 @@ module.exports =  (objectrepository) => {
     return async (req, res,next) => {
         try {
             const fishList= await fishModel.find({});
-            if (fishList === null || fishList === undefined) {
+            if (fishList === null || fishList === 'undefined') {
                 res.locals.fishList = [];
             } else {
                 res.locals.fishList = fishList;

@@ -4,18 +4,14 @@
  */
 const requireOption = require("../generic/requireOption");
 
-module.exports = function (objectrepository) {
-
-    return function (req, res,next) {
+module.exports =  (objectrepository) => {
         const fishModel = requireOption(objectrepository, "FishModel");
-
-        return (req,res,next)=> {
+        return async (req,res,next)=> {
             if (
                 typeof req.body.name ==="undefined" ||
                 typeof req.body.birthdate == "undefined" ||
                 typeof req.body.weight == "undefined" ||
-                typeof req.body.color == "undefined" ||
-                typeof req.body.predator == "undefined"
+                typeof req.body.color == "undefined"
             ) {
                 return next();
             }
@@ -27,21 +23,27 @@ module.exports = function (objectrepository) {
             if (Number.isNaN(parseFloat(req.body.weight))){
                 return next(new Error("A súly egy szám kell legyen"));
             }
+            const reqPredator = req.body.predator;
+            let isPredator = false;
+            if (typeof reqPredator !== 'undefined') {
+                if (reqPredator === 'on') {
+                    isPredator = true;
+                } else if (reqPredator !== 'off') {
+                    return next(new Error("Nem helyesen lett kitöltve a checkbox"));
+                }
+            }
 
             res.locals.fish.name = req.body.name;
             res.locals.fish.birthdate = req.body.birthdate;
-            res.locals.fish.weight = req.body.weight;
+            res.locals.fish.weight = Number.parseFloat(req.body.weight);
             res.locals.fish.color = req.body.color;
-            res.locals.fish.predator = req.body.predator;
+            res.locals.fish.predator = isPredator;
 
-            res.locals.fish.save(err => {
-                if (err) {
-                    return next(err);
-                }
-
-                return next();
-            });
+            try {
+                await res.locals.fish.save();
+                return res.redirect("/fish");
+            } catch (err){
+                next(err);
+            }
         }
-    };
-
 };

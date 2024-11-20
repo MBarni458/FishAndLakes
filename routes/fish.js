@@ -13,10 +13,11 @@ module.exports = (app)=> {
     };
 
     /**
-     * Get one fish
+     * Edit one fish
      */
     app.use('/fish/get/:fishid',
         getFishMW(objectRepository),
+        editFishMW(objectRepository),
         renderMW(objectRepository, 'fish_edit')
     );
 
@@ -25,16 +26,6 @@ module.exports = (app)=> {
      * Create new fish
      */
     app.use('/fish/new',
-        //editFishMW(objectRepository),
-        getFishMW(objectRepository),
-        renderMW(objectRepository, 'fish_edit')
-    );
-
-    /**
-     * Edit the fish
-     */
-    app.use('/fish/:fishid/edit',
-        getFishMW(objectRepository),
         editFishMW(objectRepository),
         renderMW(objectRepository, 'fish_edit')
     );
