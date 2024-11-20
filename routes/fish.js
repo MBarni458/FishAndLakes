@@ -5,10 +5,11 @@ const deleteFishMW = require('../middleware/fish/deleteFish');
 
 const renderMW = require('../middleware/generic/render');
 
+const FishModel = require('../models/fish');
 
-module.exports = function (app) {
+module.exports = (app)=> {
     const objectRepository = {
-        fishModel: null
+        FishModel: FishModel
     };
 
     /**
@@ -24,7 +25,8 @@ module.exports = function (app) {
      * Create new fish
      */
     app.use('/fish/new',
-        editFishMW(objectRepository),
+        //editFishMW(objectRepository),
+        getFishMW(objectRepository),
         renderMW(objectRepository, 'fish_edit')
     );
 

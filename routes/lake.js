@@ -5,11 +5,12 @@ const deleteLakeMW = require('../middleware/lake/deleteLake');
 const getFishListMW = require('../middleware/fish/getFishList');
 
 const renderMW = require('../middleware/generic/render');
+const FishModel = require("../models/fish");
 
 
-module.exports = function (app) {
+module.exports = (app)=> {
     const objectRepository = {
-        lakeModel: {}
+        FishModel: FishModel
     };
 
     /**

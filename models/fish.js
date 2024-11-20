@@ -1,5 +1,5 @@
 const Schema = require('mongoose').Schema;
-const db = require('../config/db');
+const db = require('../confing/db');
 
 const Fish = db.model('Fish', {
     name: String,
