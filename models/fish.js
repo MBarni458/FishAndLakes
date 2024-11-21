@@ -7,6 +7,7 @@ const Fish = db.model('Fish', {
     weight:Number,
     color:String,
     predator:Boolean,
+    location: String
 });
 
 module.exports = Fish;

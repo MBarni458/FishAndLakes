@@ -13,7 +13,7 @@ module.exports = (app)=> {
     };
 
     /**
-     * Edit one fish
+     * Edit a fish
      */
     app.use('/fish/get/:fishid',
         getFishMW(objectRepository),

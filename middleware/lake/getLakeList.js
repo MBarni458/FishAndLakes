@@ -4,11 +4,25 @@
  */
 
 const lakeListExample = require("../test_data/lakeListExample");
+const requireOption = require("../generic/requireOption");
 
 module.exports = function (objectrepository) {
-    return function (req, res, next) {
-        res.locals.lakeList = lakeListExample
-        next();
+    const lakeModel = requireOption(objectrepository, "LakeModel");
+
+    return async (req, res,next) => {
+        try {
+            const lakeList= await lakeModel.find({});
+            if (lakeList === null || lakeList === 'undefined') {
+                res.locals.lakeList = [];
+            } else {
+                res.locals.lakeList = lakeList;
+            }
+
+            return next();
+        }catch (err){
+            return next(err);
+        }
+
     };
 
 };

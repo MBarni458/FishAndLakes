@@ -18,6 +18,7 @@ module.exports =  (objectrepository) => {
 
             if (typeof  res.locals.fish === "undefined") {
                 res.locals.fish = new fishModel();
+                res.locals.fish.location="";
             }
 
             if (Number.isNaN(parseFloat(req.body.weight))){
