@@ -1,9 +1,7 @@
 /**
  * Using POST params update the fish's location in the database
  */
-const requireOption = require("../generic/requireOption");
 module.exports = function (objectrepository) {
-    const fishModel = requireOption(objectrepository, "FishModel");
     return async (req,res,next)=> {
         if (res.locals.fish === 'undefined') {
             return next();

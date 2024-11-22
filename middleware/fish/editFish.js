@@ -42,7 +42,7 @@ module.exports =  (objectrepository) => {
 
             try {
                 await res.locals.fish.save();
-                return res.redirect("/fish");
+                return res.redirect(`/fish/get/${res.locals.fish._id}`);
             } catch (err){
                 next(err);
             }

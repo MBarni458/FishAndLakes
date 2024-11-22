@@ -57,7 +57,7 @@ module.exports = function (objectrepository) {
 
             try {
                 await res.locals.lake.save();
-                return res.redirect("/lakes");
+                return res.redirect(`/lake/get/${res.locals.lake._id}`);
             } catch (err){
                 next(err);
             }
