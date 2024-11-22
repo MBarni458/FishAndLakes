@@ -80,30 +80,29 @@
                             <a href="/fish/get/<%=fish._id%>" class="btn btn-outline-secondary">Megtekintés</a>
                         </div>
                         <div>
-                            <button name="removeFish" type="submit" class="btn btn-outline-danger" value="<%= fish._id%>">Törlés</button>
+                            <a href="/fish/remove_location/<%= fish._id%>" class="btn btn-outline-danger">Törlés</a>
                         </div>
                     </div>
                     <%});}%>
                     </form>
                 </div>
-            <div class="row">
-                <form method="post">
+                <form method="post" action="/fish/edit_location?lakeid=<%= edit ? lake._id : ""%>">
                 <!--Fish dropdown-->
+                    <div class="row">
                 <div class="dropdown col-6">
-                    <select name="addFish" class="border rounded border-primary mx-auto py-1 w-100 text-primary">
+                    <select name="selected_fish" class="rounded  mx-auto py-1 w-100 border-primary text-primary" <%= edit ? "" : "disabled"%>>>
                         <option selected disabled class=>Válassz halat</option>>
                         <% fishList.forEach((fish)=> {  %>
                         <option class="text-primary" id="<%=fish._id%>" value="<%=fish._id%>"><%=fish.name%></option>
                         <% });%>
                     </select>
                 </div>
-
                 <!--Add button-->
                 <div class="col-6 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-outline-primary">Hozzáad</button>
+                    <button type="submit" class="btn btn-outline-primary" <%= edit ? "" : "disabled" %>>Hozzáad</button>
                 </div>
+                    </div>
                 </form>
-            </div>
         </div>
     </div>
 </div>

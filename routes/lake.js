@@ -3,7 +3,7 @@ const editLakeMW = require('../middleware/lake/editLake');
 const getLakeMW = require('../middleware/lake/getLake');
 const deleteLakeMW = require('../middleware/lake/deleteLake');
 const getFishListMW = require('../middleware/fish/getFishList');
-const addFish = require('../middleware/lake/addFish');
+const addFish = require('../middleware/fish/editFishLocation');
 
 const renderMW = require('../middleware/generic/render');
 const FishModel = require("../models/fish");
