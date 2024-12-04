@@ -3,13 +3,22 @@
  * The result is saved to res.locals.fish
  */
 
-const fishListExample = require("../test_data/fishListExample");
+const requireOption = require("../generic/requireOption");
 
-module.exports = function (objectrepository) {
-
-    return function (req, res,next) {
-        res.locals.fish = fishListExample[req.params.fishid-1]
-        next();
-    };
-
-};
+module.exports =  (objectrepository) => {
+    const fishModel = requireOption(objectrepository, 'FishModel');
+    return async (req, res, next) => {
+        try {
+            if (req.params.fishid){
+                res.locals.fish = await fishModel.findOne(
+                    {
+                        _id: req.params.fishid,
+                    }
+                );
+            }
+            return next();
+        } catch (err) {
+            return next(err);
+        }
+    }
+}

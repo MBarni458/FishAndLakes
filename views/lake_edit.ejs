@@ -14,13 +14,13 @@
                 <div class="col-12">
                     <h1 class="text-center">Tó <% if(edit) { %> szerkesztése <%}else{%> létrehozása<%}%></h1>
                 </div>
-                <form>
+                <form method="post">
                     <div class="row">
                         <!--Name-->
                         <div class="col-12 col-md-6">
                                 <div class="mb-3">
                                     <label for="lakeName" class="form-label">Név</label>
-                                    <input type="text" class="form-control border-primary" id="lakeName" value="<%= edit ? lake.name : "" %>">
+                                    <input name="name" type="text" class="form-control border-primary" id="lakeName" value="<%= edit ? lake.name : "" %>">
                                 </div>
                         </div>
                             <!--Natural-->
@@ -28,28 +28,28 @@
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="natural">Természetes</label>
                                     <br>
-                                    <input class="form-check-input mx-auto w-25" type="checkbox" id="natural" <%= edit && lake.natural ? "checked" : "" %>>
+                                    <input name="natural" class="form-check-input mx-auto w-25" type="checkbox" id="natural" <%= edit && lake.natural ? "checked" : "" %>>
                                 </div>
                             </div>
                         <!--Water content-->
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label for="waterContent" class="form-label">Víztartalom (liter)</label>
-                                <input type="number" class="form-control border-primary" id="waterContent" value="<%= edit ? lake.waterContent : 0 %>">
+                                <input name="waterContent" type="number" class="form-control border-primary" id="waterContent" value="<%= edit ? lake.waterContent : 0 %>">
                             </div>
                         </div>
                         <!--Depth-->
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label for="lakeDepth" class="form-label">Legmélyebb pont (méter)</label>
-                                <input type="number" class="form-control border-primary" id="lakeDepth" value="<%= edit ? lake.depth : 0 %>">
+                                <input name="depth" type="number" class="form-control border-primary" id="lakeDepth" value="<%= edit ? lake.depth : 0 %>">
                             </div>
                         </div>
                         <!--Description-->
                         <div class="col-12">
                             <div class="mb-3">
                                 <label for="description">Leírás</label>
-                                <textarea class="form-control border-primary" id="description" placeholder="Required example textarea" required><%= edit ? lake.description : "" %>
+                                <textarea name="description" class="form-control border-primary" id="description" placeholder="Required example textarea" required><%= edit ? lake.description : "" %>
                                 </textarea>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                             <a href="/lake" class="btn btn-outline-primary">Vissza</a>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-primary">Mentés</button>
+                            <button type="submit" class="btn btn-outline-primary">Mentés</button>
                         </div>
                     </div>
                 </form>
@@ -68,6 +68,7 @@
                     <h1 class="text-center">Halak listája</h1>
                 <!--Fish grid-->
                 <div class="h-75 overflow-y-scroll p-2">
+                    <form method="post">
                     <!--Fish card-->
                     <%if (edit) { %>
                         <%lake.fish.forEach((fish)=> {%>
@@ -79,27 +80,29 @@
                             <a href="/fish/get/<%=fish._id%>" class="btn btn-outline-secondary">Megtekintés</a>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-outline-danger">Törlés</button>
+                            <a href="/fish/remove_location/<%= fish._id%>" class="btn btn-outline-danger">Törlés</a>
                         </div>
                     </div>
                     <%});}%>
+                    </form>
                 </div>
-            <div class="row">
+                <form method="post" action="/fish/edit_location?lakeid=<%= edit ? lake._id : ""%>">
                 <!--Fish dropdown-->
+                    <div class="row">
                 <div class="dropdown col-6">
-                    <select class="border rounded border-primary mx-auto py-1 w-100 text-primary">
+                    <select name="selected_fish" class="rounded  mx-auto py-1 w-100 border-primary text-primary" <%= edit ? "" : "disabled"%>>>
                         <option selected disabled class=>Válassz halat</option>>
                         <% fishList.forEach((fish)=> {  %>
-                        <option class="text-primary" id="<%=fish._id%>"><%=fish.name%></option>
+                        <option class="text-primary" id="<%=fish._id%>" value="<%=fish._id%>"><%=fish.name%></option>
                         <% });%>
                     </select>
                 </div>
-
                 <!--Add button-->
                 <div class="col-6 d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-primary">Hozzáad</button>
+                    <button type="submit" class="btn btn-outline-primary" <%= edit ? "" : "disabled" %>>Hozzáad</button>
                 </div>
-            </div>
+                    </div>
+                </form>
         </div>
     </div>
 </div>

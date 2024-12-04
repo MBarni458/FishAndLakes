@@ -5,19 +5,23 @@ const deleteLakeMW = require('../middleware/lake/deleteLake');
 const getFishListMW = require('../middleware/fish/getFishList');
 
 const renderMW = require('../middleware/generic/render');
+const FishModel = require("../models/fish");
+const LakeModel = require("../models/lake");
 
 
-module.exports = function (app) {
+module.exports = (app)=> {
     const objectRepository = {
-        lakeModel: {}
+        FishModel: FishModel,
+        LakeModel: LakeModel
     };
 
     /**
-     * Get lake
+     * Edit a lake
      */
     app.use('/lake/get/:lakeid',
         getLakeMW(objectRepository),
         getFishListMW(objectRepository),
+        editLakeMW(objectRepository),
         renderMW(objectRepository, 'lake_edit')
     );
 
@@ -32,23 +36,11 @@ module.exports = function (app) {
     );
 
     /**
-     * Edit the lake
-     */
-    app.use('/lake/:lakeid/edit',
-        getLakeMW(objectRepository),
-        editLakeMW(objectRepository),
-        renderMW(objectRepository, 'lake_edit')
-    );
-
-    /**
      * Delete lake (will redirect to /lakes after finish)
      */
-    app.use('/lake/:lakeid/delete',
+    app.use('/lake/delete/:lakeid',
         getLakeMW(objectRepository),
         deleteLakeMW(objectRepository),
-        function (req, res, next) {
-            return res.redirect('/lake');
-        }
     );
     /**
      * List all lakes

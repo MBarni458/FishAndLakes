@@ -3,12 +3,25 @@
  * The result is saved to res.locals.fishList
  */
 
-const fishListExample = require("../test_data/fishListExample");
+const requireOption = require("../generic/requireOption");
 
-module.exports = function (objectrepository) {
-    return function (req, res,next) {
-        res.locals.fishList=fishListExample;
-        next();
+module.exports =  (objectrepository) => {
+    const fishModel = requireOption(objectrepository, "FishModel");
+
+    return async (req, res,next) => {
+        try {
+            const fishList= await fishModel.find({});
+            if (fishList === null || fishList === 'undefined') {
+                res.locals.fishList = [];
+            } else {
+                res.locals.fishList = fishList;
+            }
+
+            return next();
+        }catch (err){
+            return next(err);
+        }
+
     };
 
 };
