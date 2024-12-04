@@ -2,8 +2,6 @@
  * Load all lakes from the database
  * The result is saved to res.locals.lakeList
  */
-
-const lakeListExample = require("../test_data/lakeListExample");
 const requireOption = require("../generic/requireOption");
 
 module.exports = function (objectrepository) {
